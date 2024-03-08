@@ -42,5 +42,6 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "vite": "^5.0.8",
     "vite-plugin-pages": "^0.32.0"
-  }
+  },
+  "homepage": "https://MarleyApong.github.io/frontend-customer"
 }

@@ -43,6 +43,7 @@ const CreateOrganization = () => {
 	// ADD ORGANIZATION
 	const handleSubmit = (e) => {
 		e.preventDefault()
+		// setIsSubmitting(true)
 		if (
 			organization.name === "" ||
 			organization.description === "" ||
@@ -63,12 +64,12 @@ const CreateOrganization = () => {
 				formData.append('picture', file)
 			}
 			Organization.add(formData)
-			setIsSubmitting(true)
 				.then((res) => {
 					toast.success("organization ajoutée avec succès !")
 					Navigate('/organizations/')
 				})
 				.catch((err) => {
+					console.log("err", err);
 					useHandleError(err, Navigate)
 				})
 				.finally(() => {
@@ -198,8 +199,10 @@ const CreateOrganization = () => {
 
 							<div className="col-md-12 d-flex gap-2">
 								<button type="submit" className="Btn Send btn-sm" disabled={isSubmitting}>
-									{isSubmitting ? <Spinners.TailSpin height="18" width="18" ariaLabel="tail-spin-loading" radius="5" color="#fff" /> : <RemixIcons.RiSendPlaneLine />}
-									{isSubmitting ? 'Ajout en cours' : 'Ajouter'}
+									{/* {isSubmitting ? <Spinners.TailSpin height="18" width="18" ariaLabel="tail-spin-loading" radius="5" color="#fff" /> : <RemixIcons.RiSendPlaneLine />}
+
+									{isSubmitting ? 'Ajout en cours' : 'Ajouter'} */}
+									Ajouter
 								</button>
 							</div>
 						</form>

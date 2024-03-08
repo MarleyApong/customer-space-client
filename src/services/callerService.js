@@ -2,7 +2,7 @@ import axios from "axios"
 import { Account } from "./accountService"
 
 const Axios = axios.create({
-    baseURL: 'https://deploy-api-customer.onrender.com',
+    baseURL: 'https://magical-galileo.212-227-211-20.plesk.page',
     headers: {
         'Access-Control-Allow-Origin': '*'
     }
