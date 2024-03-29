@@ -9,16 +9,16 @@ import '@fontsource/poppins/400.css'
 import '@fontsource/poppins/500.css'
 import '@fontsource/poppins/600.css'
 import '@fontsource/poppins/700.css'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter future={{v7_startTransition: true}}>
       <Toaster
         position="top-center"
         reverseOrder={false}
       />
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
 )
