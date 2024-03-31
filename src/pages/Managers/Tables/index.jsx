@@ -113,7 +113,7 @@ const Tables = () => {
    useEffect(() => {
       Table.getOne(id).then((res) => {
          setOneData(res.data.content)
-         const webPage = `${config.frontUrl}/page/${res.data.content.webPage}`
+         const webPage = `${config.frontUrl}#/page/${res.data.content.webPage}`
          generateQRCode(webPage)
       }).catch((err) => {
          useHandleError(err, Navigate)
