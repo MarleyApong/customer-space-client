@@ -7,19 +7,23 @@ import { Company } from '../../services/companyService'
 const Website = () => {
    const Navigate = useNavigate()
    const { company } = useParams()
-
-   const currentPath = window.location.pathname
-   const queryString = window.location.search
-
    const [description, setDescription] = useState('')
 
+   const currentHash = window.location.hash // GET THE URL FRAGMENT
+   const queryStringIndex = currentHash.indexOf('?') // FIND THE INDEX OF QUERY STRING
+   const pathname = queryStringIndex !== -1 ? currentHash.slice(0, queryStringIndex) : currentHash // EXTRACT THE PATH
+   const queryString = queryStringIndex !== -1 ? currentHash.slice(queryStringIndex) : '' // EXTRACT THE QUERY STRING
+
+   console.log("company", company)
+
+   let urlNote = ""
    const handleNavToOrder = () => {
-      const urlNote = currentPath + "/order" + queryString
+      urlNote = pathname.replace("#", "") + "/order" + queryString
       Navigate(urlNote)
    }
 
    const handleNavToNote = () => {
-      const urlNote = currentPath + "/note" + queryString
+      urlNote = pathname.replace("#", "") + "/note" + queryString
       Navigate(urlNote)
    }
 

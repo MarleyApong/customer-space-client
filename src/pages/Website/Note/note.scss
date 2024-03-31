@@ -148,54 +148,39 @@
             }
 
             .Second {
-                background: linear-gradient(70deg, rgba(230, 226, 226, 0.524), rgba(227, 86, 86, 0.638)), url('../../assets/img/template-survey.jpg');
-                background-repeat: no-repeat;
-                background-position: center;
-                background-size: cover;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                // background-repeat: no-repeat;
+                // background-position: center;
+                // background-size: cover;
                 width: 100%;
                 padding: 0;
-                animation: service_ok 1s ease;
-
+                background: #f7f7f7;
                 .part {
                     max-width: 400px;
+                    // filter: drop-shadow(2px 2px 10px #868585);
                     margin-left: 1rem;
 
-                    .Survey-Success {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        margin-bottom: 50px;
+                    .Quest-Content {
+                        margin-top: 40px;
                         text-align: center;
-
-                        .Circle-check {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            width: 100px;
-                            height: 100px;
-                            border-radius: 50%;
-                            background: green;
-                            color: var(--color-1);
-
-                            .Icon-Check {
-                                font-size: 30px;
-                            }
-                        }
                     }
 
                     .Form-Subscribe {
                         display: flex;
                         flex-direction: column;
                         gap: 15px;
-                        margin-top: 20px;
+                        margin-top: 40px;
+                        min-height: 400px;
 
                         input {
                             border: none;
                             outline: none;
                             border: 2px solid var(--website-color);
                             border-style: dashed;
-                            padding: 15px;
+                            padding: 10px;
                         }
 
                         .Nav-Step {

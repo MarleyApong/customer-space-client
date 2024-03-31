@@ -101,6 +101,8 @@ const Order = () => {
       loadCompany()
    }, [idUser, access])
 
+   console.log("comp", company);
+
    // FETCH ALL DATA
    useEffect(() => {
       const loadData = async () => {

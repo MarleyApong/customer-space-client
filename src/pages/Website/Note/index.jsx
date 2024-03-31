@@ -213,14 +213,8 @@ const Note = () => {
                                 :
                                 <div className="Second">
                                     <div className="part">
-                                        <div className="Survey-Success">
-                                            <div className="Circle-check">
-                                                <RemixIcons.RiCheckDoubleLine className='Icon-Check' />
-                                            </div>
-                                            <span>Nous vous remercions pour vos reponses</span>
-                                        </div>
                                         <div className="Quest-Content">
-                                            <span>Aimeriez-vous, que nous vous contactons ?</span>
+                                            <h4>Aimeriez-vous, que nous vous contactons ?</h4>
                                             <form onSubmit={(e) => e.preventDefault()} className='Form-Subscribe'>
                                                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Votre nom' />
                                                 <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder='Votre numéro de téléphone' />

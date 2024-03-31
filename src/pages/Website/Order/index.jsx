@@ -4,17 +4,18 @@ import * as RemixIcons from "react-icons/ri"
 import Pagination from '../../../components/Pagination'
 import { Product } from '../../../services/productService'
 import { Orders } from '../../../services/orderService'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import useHandleError from "../../../hooks/useHandleError"
 
 const Order = () => {
    const Navigate = useNavigate()
    const { company } = useParams()
+
    // GET PARAMS AFTER  THE (?)
-   const queryString = window.location.search;
-   const urlParams = new URLSearchParams(queryString);
-   const idTable = urlParams.get('fkpngt44tdot')
+   const location = useLocation()
+   const queryParams = new URLSearchParams(location.search)
+   const idTable = queryParams.get('fkpngt44tdot')
 
    const [products, setProducts] = useState([])
    const [cart, setCart] = useState([])
@@ -75,24 +76,39 @@ const Order = () => {
    // UPDATE QUANTITY OF PRODUCT
    const updateProductQuantity = (productId, newQuantity) => {
       // LIMIT QUANTITY TO MINIMUM 0 AND MAXIMUM 10
-      newQuantity = Math.max(0, Math.min(10, newQuantity))
+      newQuantity = Math.max(0, Math.min(10, newQuantity));
+
+      // CHECK IF THE PRODUCT EXISTS IN THE CART
+      const existingItemIndex = cart.findIndex(item => item.id === productId);
+
+      // IF THE PRODUCT EXISTS IN THE CART
+      if (existingItemIndex !== -1) {
+         // UPDATE CART ITEM QUANTITY
+         const updatedCart = cart.map((item, index) =>
+            index === existingItemIndex ? { ...item, quantity: newQuantity } : item
+         );
+         setCart(updatedCart);
+      } else {
+         // FIND THE PRODUCT IN THE PRODUCTS LIST
+         const productToAdd = products.find(item => item.id === productId);
+
+         // ADD PRODUCT TO CART WITH QUANTITY
+         if (productToAdd) {
+            const updatedCart = [...cart, { ...productToAdd, quantity: 1 }];
+            setCart(updatedCart)
+         }
+      }
 
       // UPDATE PRODUCT QUANTITY IN PRODUCT LIST
       const updatedProducts = products.map(product =>
          product.id === productId ? { ...product, quantity: newQuantity } : product
-      )
+      );
       setProducts(updatedProducts)
-
-      // UPDATE PRODUCT QUANTITY IN CART
-      const updatedCart = cart.map(item =>
-         item.id === productId ? { ...item, quantity: newQuantity } : item
-      )
-      setCart(updatedCart)
 
       // REMOVE PRODUCT FROM CART IF QUANTITY IS ZERO
       if (newQuantity === 0) {
-         const filteredCart = updatedCart.filter(item => item.id !== productId)
-         setCart(filteredCart)
+         const updatedCart = cart.filter(item => item.id !== productId)
+         setCart(updatedCart)
       }
    }
 
@@ -130,7 +146,7 @@ const Order = () => {
             )
 
             // RESET CART AND PRODUCT
-            const resetProducts = products.map(product => ({ ...product, quantity: 0 }));
+            const resetProducts = products.map(product => ({ ...product, quantity: 0 }))
             setCart([])
             setProducts(resetProducts)
             toast.success("Nous avons recu votre commande.")
@@ -169,7 +185,7 @@ const Order = () => {
             {mode ?
                <div className='content-menu'>
                   {products.length > 0 ? products.map((product) => (
-                     <div className='product' key={product.id} onClick={() => setShowCart(true)}>
+                     <div className='product' key={product.id}>
                         <img src={product.picture} alt='' />
                         <div className='details'>
                            <div className='resource'>
@@ -177,14 +193,14 @@ const Order = () => {
                            </div>
                            <div className='control'>
                               <div className='control-btn'>
-                                 <button onClick={() => updateProductQuantity(product.id, product.quantity - 1)}>-</button>
+                                 <button onClick={() => { updateProductQuantity(product.id, product.quantity - 1); setShowCart(true) }}>-</button>
                                  <span>{product.quantity}</span>
-                                 <button onClick={() => updateProductQuantity(product.id, product.quantity + 1)}>+</button>
+                                 <button onClick={() => { updateProductQuantity(product.id, product.quantity + 1); setShowCart(true) }}>+</button>
                               </div>
                               <span>{product.price} fcfa</span>
                            </div>
                            <div className='add-btn'>
-                              <button onClick={() => handleAddToCart(product)} disabled={cart.some(item => item.id === product.id)}><RemixIcons.RiShoppingCartLine /> panier</button>
+                              <button onClick={() => { handleAddToCart(product); setShowCart(true) }} disabled={cart.some(item => item.id === product.id)}><RemixIcons.RiShoppingCartLine /> panier</button>
                            </div>
                         </div>
                      </div>
@@ -201,18 +217,18 @@ const Order = () => {
                      </thead>
                      <tbody>
                         {products.length > 0 ? products.map((product) => (
-                           <tr key={product.id} onClick={() => setShowCart(true)}>
+                           <tr key={product.id}>
                               <td >{product.name}</td>
                               <td className='text-center'>
                                  <div className='control-btn'>
-                                    <button onClick={() => updateProductQuantity(product.id, product.quantity - 1)}>-</button>
+                                    <button onClick={() => { updateProductQuantity(product.id, product.quantity - 1); setShowCart(true) }}>-</button>
                                     <span>{product.quantity}</span>
-                                    <button onClick={() => updateProductQuantity(product.id, product.quantity + 1)}>+</button>
+                                    <button onClick={() => { updateProductQuantity(product.id, product.quantity + 1); setShowCart(true) }}>+</button>
                                  </div>
                               </td>
                               <td className='text-center'>{product.price} fcfa</td>
                               <td className='add-btn text-end'>
-                                 <button onClick={() => handleAddToCart(product)} disabled={cart.some(item => item.id === product.id)}>
+                                 <button onClick={() => { handleAddToCart(product); setShowCart(true) }} disabled={cart.some(item => item.id === product.id)}>
                                     <RemixIcons.RiShoppingCartLine />
                                     <span> panier</span>
                                  </button>
