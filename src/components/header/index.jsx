@@ -51,9 +51,9 @@ const Header = ({ sidebar, setSidebar }) => {
     // }
 
     useEffect(() => {
+        playSuccess()
         if (eventOrder !== '' && access === 20) {
             toast.success("Vous avez une nouvelle commande")
-            playSuccess()
         }
     }, [eventOrder])
 

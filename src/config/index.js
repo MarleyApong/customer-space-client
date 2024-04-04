@@ -1,5 +1,5 @@
 let config = {}
-const ENV = 'prod'
+const ENV = 'dev'
 
 if (ENV === 'dev') {
    config = {
@@ -10,7 +10,7 @@ if (ENV === 'dev') {
 else {
    config = {
       serverUrl: "https://magical-galileo.212-227-211-20.plesk.page/",
-      frontUrl: "https://marleyapong.github.io/customer-space-client/"
+      frontUrl: "https://cs.allhcorp.com/"
    }
 }
 
